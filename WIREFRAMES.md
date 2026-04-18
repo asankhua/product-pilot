@@ -118,7 +118,17 @@
 │ │ ○ Dash  │  ┌─ Stats Bar ──────────────────────────────────────┐   │
 │ │ ○ Proj  │  │  Total: 12    In Progress: 3    Completed: 8    │   │
 │ │ ○ Chat  │  │  Drafts: 1                                      │   │
-│ │ ○ Setti │  └──────────────────────────────────────────────────┘   │
+│ │ ○ Pres  │  └──────────────────────────────────────────────────┘   │
+│ │ ○ Setti │                                                          │
+│ │         │                                                          │
+│ │ ─────── │                                                          │
+│ │ 🔧 Tools│                                                          │
+│ │ ▹ Meet  │                                                          │
+│ │ ▹ PDF   │                                                          │
+│ │ ▹ Eng   │                                                          │
+│ │ ▹ Back  │                                                          │
+│ │ ▹ Prom  │                                                          │
+│ │ ▹ Daily │                                                          │
 │ │         │                                                          │
 │ │         │  ┌─ Recent Projects ─────────────────────────────────┐  │
 │ │         │  │                                                    │  │
@@ -1049,13 +1059,65 @@ Generate PowerPoint presentations from project step data
 
 ---
 
-## Advanced Tools Section (Landing Page)
-**5 Tool Cards:**
-1. MeetingPro AI - Meeting transcription & summaries
-2. PDF/Doc Generator - Document conversion
-3. Engineer Prompt - SDLC toolkit
-4. Backlog Manager - Agile project management
-5. Prompt Builder - AI prompt crafting
+## Advanced Tools Section (Landing Page & Sidebar)
+**6 Tool Cards:**
+1. **MeetingPro AI** - Meeting transcription & summaries (External)
+2. **PDF/Doc Generator** - Document conversion (External)
+3. **Engineer Prompt** - SDLC toolkit (External)
+4. **Backlog Manager** - Agile project management (External)
+5. **Prompt Builder** - AI prompt crafting (External)
+6. **Daily Drops** - Tech news RSS feed from ScienceDaily (Internal)
+
+**Daily Drops Details:**
+- **Location:** Landing Page (card) + Sidebar under "Advanced Tools" section
+- **URL:** `/tools/daily-drops`
+- **API:** `/api/tools/product-news` - Fetches from https://www.sciencedaily.com/rss/top/technology.xml
+- **Features:** News tiles grid, article excerpts, direct links, refresh button
+- **Icon:** Newspaper (Lucide React)
+- **Color:** Sky-500 to Blue-600 gradient
+
+---
+
+## Screen X: Daily Drops (/tools/daily-drops)
+
+```
+┌──────────────────────────────────────────────────────────────────────┐
+│ [← Back]  📰 Daily Drops                    [ScienceDaily] [↻ Refresh]│
+│              Tech News Curated Daily                                  │
+├──────────────────────────────────────────────────────────────────────┤
+│                                                                       │
+│  ┌─ News Tile 1 ──────────────────────────────────────────────────┐  │
+│  │ AI Breakthrough in Quantum Computing                           │  │
+│  │ Jan 15, 2026                                                   │  │
+│  │ Researchers have developed a new quantum algorithm that...     │  │
+│  │ [Read Full Story →]                                            │  │
+│  └─────────────────────────────────────────────────────────────────┘  │
+│                                                                       │
+│  ┌─ News Tile 2 ──────────────────────────────────────────────────┐  │
+│  │ New Solar Panel Efficiency Record                              │  │
+│  │ Jan 14, 2026                                                   │  │
+│  │ Scientists achieve 47.6% efficiency in multi-junction solar... │  │
+│  │ [Read Full Story →]                                            │  │
+│  └─────────────────────────────────────────────────────────────────┘  │
+│                                                                       │
+│  ┌─ News Tile 3 ──────────────────────────────────────────────────┐  │
+│  │ SpaceX Starship Successfully Docks with ISS                    │  │
+│  │ Jan 13, 2026                                                   │  │
+│  │ The latest Starship mission marks a milestone in commercial... │  │
+│  │ [Read Full Story →]                                            │  │
+│  └─────────────────────────────────────────────────────────────────┘  │
+│                                                                       │
+│  ... (more tiles in responsive grid)                                  │
+│                                                                       │
+└──────────────────────────────────────────────────────────────────────┘
+│  News feed provided by ScienceDaily                    © 2024 PP     │
+└──────────────────────────────────────────────────────────────────────┘
+```
+
+**Interactions:**
+- Click "Read Full Story" → Opens article in new tab
+- Click "Refresh" → Reloads RSS feed (cached for 1 hour)
+- Responsive grid: 3 cols (desktop), 2 cols (tablet), 1 col (mobile)
 
 ---
 
@@ -1071,7 +1133,7 @@ Generate PowerPoint presentations from project step data
 | Date | Feature | Description |
 |------|---------|-------------|
 | 2026-04-18 | Dashboard | Removed mock data, now fetches from API |
-| 2026-04-18 | Landing Page | Added Advanced Tools section (5 tools) |
+| 2026-04-18 | Landing Page | Added Advanced Tools section (6 tools including Daily Drops) |
 | 2026-04-18 | Landing Page | Updated footer with copyright and license |
 | 2026-04-18 | Database | Removed Prisma, now using @neondatabase/serverless |
 | 2026-04-18 | Export | Enhanced PDF/DOC formatters to match UI display |

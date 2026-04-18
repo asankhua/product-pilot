@@ -63,7 +63,7 @@ User enters Problem Statement
 | Icons              | Lucide React                                   | Icon library                               |
 | Regenerate         | Step-level retry                               | Regenerate any step independently          |
 | Navigation         | Next Step Buttons                              | Conditional progression between steps      |
-| Landing Page       | Advanced Tools Section                         | MeetingPro AI, PDF Generator, etc.        |
+| Landing Page       | Advanced Tools Section                         | MeetingPro AI, PDF Generator, Daily Drops, etc. |
 | Footer             | MIT License with copyright                     | All pages except landing                   |
 | Step Completion    | Saved Sessions Based                           | Steps marked complete based on saved data  |
 | Deployment         | Docker + Hugging Face Spaces                   | Cloud deployment platform                  |
@@ -1882,10 +1882,40 @@ The pipeline progress system provides constant visual feedback across the entire
 
 | Feature | Description | Location |
 |---------|-------------|----------|
-| **Advanced Tools** | 5 AI-powered tool cards (MeetingPro, PDF Generator, Engineer Prompt, Backlog Manager, Prompt Builder) | Landing Page |
+| **Advanced Tools** | 6 AI-powered tool cards (MeetingPro, PDF Generator, Engineer Prompt, Backlog Manager, Prompt Builder, Daily Drops) | Landing Page / Sidebar |
 | **Presentation Generator** | PPT generation from project step data | `/presentation` |
 | **Step Completion Sync** | All 9 steps sync based on saved sessions | Project Pipeline |
 | **Export Enhanced** | PDF/DOC export with UI-matching format | Project Detail |
 | **License & Footer** | MIT License with copyright footer | All Pages |
 | **Neon Database** | Replaced Prisma with @neondatabase/serverless | Backend |
 | **Sidebar Updated** | 5 navigation items (added Presentation) | Layout |
+
+---
+
+### 📰 Daily Drops - RSS News Feed Tool
+
+**Purpose:** Standalone utility tool for tech news consumption
+
+**Features:**
+- Fetches RSS feed from ScienceDaily technology news
+- Displays articles in responsive grid layout
+- Clean, readable news tiles with title, date, and excerpt
+- Direct links to full articles
+- One-click refresh to reload feed
+- Accessible from sidebar (Dashboard view) and landing page
+
+**Technical Details:**
+- **API Route:** `/api/tools/product-news` - Server-side RSS fetching with xml2js parsing
+- **Page:** `/tools/daily-drops` - Next.js App Router page with SSR-safe rendering
+- **Cache:** 1-hour revalidation for RSS feed
+- **Icon:** Newspaper (Lucide React)
+- **Color:** Sky-500 to Blue-600 gradient
+
+**Architecture:**
+```
+User Request → /api/tools/product-news → Fetch RSS → xml2js Parse → JSON Response
+                                                    ↓
+User Browser ← /tools/daily-drops ← React Component ← Grid Display
+```
+
+---
