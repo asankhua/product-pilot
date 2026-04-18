@@ -36,6 +36,7 @@ import {
   Wrench,
   Kanban,
   Terminal,
+  Newspaper,
 } from "lucide-react";
 import { useState, useRef } from "react";
 import { Badge } from "@/components/ui/badge";
@@ -399,6 +400,13 @@ export default function LandingPage() {
                 desc: "Advanced AI prompt building tool for crafting effective prompts. Features templates, examples, and best practices with zero server dependencies.", 
                 gradient: "from-violet-500 to-purple-600",
                 link: "https://asankhua.github.io/prompt-builder/"
+              },
+              { 
+                icon: Newspaper, 
+                title: "Daily Drops", 
+                desc: "Tech news curated daily from ScienceDaily. Get your daily dose of technology updates in clean, readable tiles.", 
+                gradient: "from-sky-500 to-blue-600",
+                link: "/tools/daily-drops"
               },
             ].map((tool, idx) => (
               <motion.div

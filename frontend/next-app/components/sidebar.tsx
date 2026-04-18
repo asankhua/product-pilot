@@ -22,6 +22,7 @@ import {
   ListTodo,
   ExternalLink,
   Presentation,
+  Newspaper,
 } from "lucide-react";
 
 const navItems = [
@@ -44,13 +45,14 @@ const pipelineSteps = [
   { id: 9, name: "OKRs", label: "9. OKRs" },
 ];
 
-// Toolkit items - external tools
+// Toolkit items - external and internal tools
 const toolkitItems = [
-  { name: "MeetingPro AI", href: "https://asankhua.github.io/meetingpro-ai/", icon: Video },
-  { name: "PDF/Doc Generator", href: "https://asankhua.github.io/ConvertFlow-PDF-Doc-Generator/", icon: FileText },
-  { name: "Engineer Prompt", href: "https://asankhua.github.io/engineer-toolkit/", icon: Code },
-  { name: "Backlog Manager", href: "https://asankhua.github.io/agile-backlog-manager/", icon: ListTodo },
-  { name: "Prompt Builder", href: "https://asankhua.github.io/prompt-builder/", icon: Sparkles },
+  { name: "MeetingPro AI", href: "https://asankhua.github.io/meetingpro-ai/", icon: Video, external: true },
+  { name: "PDF/Doc Generator", href: "https://asankhua.github.io/ConvertFlow-PDF-Doc-Generator/", icon: FileText, external: true },
+  { name: "Engineer Prompt", href: "https://asankhua.github.io/engineer-toolkit/", icon: Code, external: true },
+  { name: "Backlog Manager", href: "https://asankhua.github.io/agile-backlog-manager/", icon: ListTodo, external: true },
+  { name: "Prompt Builder", href: "https://asankhua.github.io/prompt-builder/", icon: Sparkles, external: true },
+  { name: "Daily Drops", href: "/tools/daily-drops", icon: Newspaper, external: false },
 ];
 
 interface SidebarProps {
@@ -103,23 +105,36 @@ export function Sidebar({ currentStep, projectId, onStepClick, maxCompletedStep 
             </h3>
             <div className="space-y-1">
               {toolkitItems.map((tool) => (
-                <a
-                  key={tool.name}
-                  href={tool.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block"
-                >
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="w-full justify-start gap-2 text-sm text-slate-700 hover:text-indigo-600 hover:bg-indigo-50"
+                tool.external ? (
+                  <a
+                    key={tool.name}
+                    href={tool.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block"
                   >
-                    <tool.icon className="w-4 h-4" />
-                    <span className="truncate">{tool.name}</span>
-                    <ExternalLink className="w-3 h-3 ml-auto text-slate-400" />
-                  </Button>
-                </a>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="w-full justify-start gap-2 text-sm text-slate-700 hover:text-indigo-600 hover:bg-indigo-50"
+                    >
+                      <tool.icon className="w-4 h-4" />
+                      <span className="truncate">{tool.name}</span>
+                      <ExternalLink className="w-3 h-3 ml-auto text-slate-400" />
+                    </Button>
+                  </a>
+                ) : (
+                  <Link key={tool.name} href={tool.href} className="block">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="w-full justify-start gap-2 text-sm text-slate-700 hover:text-indigo-600 hover:bg-indigo-50"
+                    >
+                      <tool.icon className="w-4 h-4" />
+                      <span className="truncate">{tool.name}</span>
+                    </Button>
+                  </Link>
+                )
               ))}
             </div>
           </div>
