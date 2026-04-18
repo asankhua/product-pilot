@@ -4,14 +4,14 @@ FROM node:18-slim
 # Set working directory
 WORKDIR /app
 
-# Copy package files
-COPY package*.json ./
+# Copy package files from frontend/next-app
+COPY frontend/next-app/package*.json ./
 
-# Install dependencies
-RUN npm ci --only=production
+# Install dependencies (use npm install since package-lock.json might not be at root)
+RUN npm install
 
 # Copy the rest of the application
-COPY . .
+COPY frontend/next-app/ .
 
 # Build the application
 RUN npm run build
