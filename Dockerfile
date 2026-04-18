@@ -52,10 +52,21 @@ ENV PYTHONUNBUFFERED=1
 
 # Create startup script to run both services
 RUN echo '#!/bin/bash\n\
+set -e\n\
 echo "Starting PPT Service on port 8000..."\n\
 cd /app/ppt-service/src && python3 main.py &\n\
 PPT_PID=$!\n\
 echo "PPT Service started with PID: $PPT_PID"\n\
+# Wait for PPT service to be ready\n\
+echo "Waiting for PPT service to be ready..."\n\
+for i in {1..30}; do\n\
+  if curl -s http://localhost:8000/health > /dev/null 2>&1; then\n\
+    echo "PPT Service is ready!"\n\
+    break\n\
+  fi\n\
+  echo "Waiting... ($i/30)"\n\
+  sleep 1\n\
+done\n\
 echo "Starting Next.js on port 7860..."\n\
 npm start &\n\
 NEXT_PID=$!\n\
