@@ -38,6 +38,7 @@ export default function SettingsPage() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [exporting, setExporting] = useState(false);
+  const [lastBackup, setLastBackup] = useState<string>('Never');
 
   // Load user preferences and projects
   useEffect(() => {
@@ -45,10 +46,12 @@ export default function SettingsPage() {
     const savedName = localStorage.getItem('userName') || '';
     const savedDarkMode = localStorage.getItem('darkMode') === 'true';
     const savedCompact = localStorage.getItem('compactView') === 'true';
+    const savedLastBackup = localStorage.getItem('lastBackup') || 'Never';
     
     setUserName(savedName);
     setDarkMode(savedDarkMode);
     setCompactView(savedCompact);
+    setLastBackup(savedLastBackup);
 
     // Load projects
     async function loadProjects() {
@@ -94,6 +97,11 @@ export default function SettingsPage() {
       link.click();
       document.body.removeChild(link);
       URL.revokeObjectURL(url);
+
+      // Save backup date
+      const backupDate = new Date().toISOString().split('T')[0];
+      localStorage.setItem('lastBackup', backupDate);
+      setLastBackup(backupDate);
 
       toast.success("All projects exported successfully");
     } catch (error) {
@@ -218,7 +226,7 @@ export default function SettingsPage() {
                   </div>
                   
                   <div className="text-xs text-slate-400">
-                    Last backup: {localStorage.getItem('lastBackup') || 'Never'}
+                    Last backup: {lastBackup}
                   </div>
                 </CardContent>
               </Card>
