@@ -10,23 +10,97 @@ license: mit
 
 # Product Pilot
 
-AI-Powered Product Manager Productivity Platform.
+![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white)
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![OpenAI](https://img.shields.io/badge/OpenAI-412991?style=for-the-badge&logo=openai&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
 
-Transform a raw problem statement into a complete product planning suite through a sequential 9-step AI pipeline.
+**AI-powered product strategy platform** that transforms problem statements into complete product planning suites. 9-step pipeline from idea to presentation-ready PRD with user stories, roadmaps, and OKRs.
+
+## Who Is This For?
+
+| User | Benefit |
+|------|---------|
+| **Product Managers** | Generate complete PRDs with user stories and roadmaps in minutes |
+| **Startup Founders** | Validate ideas and create investor-ready product documentation |
+| **Product Teams** | Align on vision with structured 9-step framework |
+| **Consultants** | Deliver professional product strategy documents to clients |
+| **Students** | Learn product management with AI-assisted guidance |
+
+## How It Helps
+
+- **Saves Hours** - Complete product strategy in minutes instead of days
+- **Structured Process** - 9-step pipeline ensures nothing is missed
+- **Professional Output** - PRDs, user stories, and roadmaps ready to share
+- **AI-Powered Chat** - Ask questions about your product anytime
+- **Export Ready** - Generate PowerPoint presentations from your data
+- **Free to Use** - Open source with no subscription required
 
 ## Pipeline Steps
 
-1. **Reframe Problem Statement** - AI analyzes and restructures the problem using HMW framework
-2. **Write Product Vision** - Generates vision, mission, value proposition, and north star metric
-3. **Identify & Profile Personas** - Creates detailed persona cards with pain points, goals, and behaviors
-4. **Clarifying Questions + AI Q&A** - Generates critical questions with an AI assistant to answer them
-5. **Market & Competitive Analysis** - Fetches competitor data, SWOT analysis, market sizing
-6. **Generate PRD** - Full Product Requirements Document with 6-8 sections using ChatPRD template
-7. **User Stories + Acceptance Criteria** - Epics, stories in Gherkin format with story points
-8. **Prioritized Backlog + Roadmap** - RICE scoring and phased roadmap
-9. **OKRs + Success Metrics** - Objectives, key results, AARRR metrics
+1. **Reframe Problem Statement** - AI analyzes using HMW framework
+2. **Write Product Vision** - Vision, mission, value proposition
+3. **Identify Personas** - Detailed user profiles with pain points
+4. **Clarifying Questions** - AI Q&A to fill knowledge gaps
+5. **Market Analysis** - Competitor research and SWOT
+6. **Generate PRD** - Full Product Requirements Document
+7. **User Stories** - Epics with RICE scoring and acceptance criteria
+8. **Prioritized Roadmap** - Phased delivery plan
+9. **OKRs & Metrics** - Objectives and success metrics
 
-**Bonus: Project Chatbot** - Ask questions about your product documentation using RAG (Retrieval-Augmented Generation)
+**Bonus: Project Chatbot** - RAG-powered Q&A on your product docs
+
+## Architecture
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                         FRONTEND (Next.js 16)                           │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌───────────────┐  │
+│  │  Dashboard  │  │  Pipeline   │  │   Chat      │  │ Presentation  │  │
+│  │             │  │   (9 Steps) │  │  (RAG)      │  │   (PPT Gen)   │  │
+│  └─────────────┘  └─────────────┘  └─────────────┘  └───────────────┘  │
+└─────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│                         BACKEND (Next.js API)                           │
+│  ┌─────────────────────────────────────────────────────────────────┐   │
+│  │                    9-Step AI Pipeline                           │   │
+│  │  ┌───────────┐  ┌───────────┐  ┌───────────┐  ┌────────────┐  │   │
+│  │  │  Step 1   │  │  Step 2   │  │  Step 3   │  │  Steps 4-9 │  │   │
+│  │  │ Problem   │─▶│  Vision   │─▶│  Personas │─▶│  (Cascade) │  │   │
+│  │  └───────────┘  └───────────┘  └───────────┘  └────────────┘  │   │
+│  │       │              │              │              │          │   │
+│  │       └──────────────┴──────────────┴──────────────┘          │   │
+│  │                              ▼                                │   │
+│  │                    ┌──────────────┐                          │   │
+│  │                    │ OpenAI GPT-4│                          │   │
+│  │                    │  (LLM)      │                          │   │
+│  │                    └──────────────┘                          │   │
+│  └─────────────────────────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│                           DATA LAYER                                    │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐  ┌───────────┐  │
+│  │   Pinecone   │  │ Neon PostgreSQL│  │  PptxGenJS │  │  OpenAI   │  │
+│  │  (Vector DB) │  │  (Relational) │  │  (PPT Gen) │  │   GPT-4   │  │
+│  │              │  │               │  │              │  │           │  │
+│  │• RAG Context │  │• Projects    │  │• Export PPT │  │• LLM      │  │
+│  │• Embeddings  │  │• Sessions    │  │• Templates  │  │• Streaming│  │
+│  └──────────────┘  └──────────────┘  └──────────────┘  └───────────┘  │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+### Data Flow
+1. **User Input** - Problem statement via Next.js UI
+2. **Sequential Pipeline** - Each step builds on previous context
+3. **AI Generation** - OpenAI GPT-4 streams real-time output
+4. **Storage** - Results saved to Neon PostgreSQL
+5. **RAG Indexing** - Embeddings stored in Pinecone for chatbot
+6. **Export** - Generate PowerPoint from any step
 
 ## Tech Stack
 
@@ -118,64 +192,64 @@ PINECONE_INDEX=your_pinecone_index_name
    - `PINECONE_ENVIRONMENT`: Your Pinecone environment (e.g., "us-east-1-aws")
    - `PINECONE_INDEX`: Your Pinecone index name
 
-## Key Features
+## Quick Start
 
-### 🎯 9-Step AI Pipeline
-Sequential product planning from problem statement to OKRs
+```bash
+# 1. Clone the repository
+git clone https://github.com/asankhua/product-pilot.git
+cd product-pilot
 
-### 📝 Template System
-8 professional templates (ChatPRD, Product School, ProductPlan) ensure consistent AI output
+# 2. Install dependencies
+cd frontend/next-app
+npm install
 
-### 🤖 Project Chatbot
-RAG-powered chatbot lets you ask questions about your product documentation:
-- "What are the main features in our PRD?"
-- "Who are our target personas?"
-- "What's on the Q3 roadmap?"
+# 3. Configure environment
+cp .env.example .env.local
+# Edit .env.local and add your OPENAI_API_KEY and other secrets
 
-### 📊 RAG System
-- Vector embeddings stored in Pinecone
-- Per-project namespace isolation
-- Semantic search across all artifacts
-- One-click delete & re-index
+# 4. Run development server
+npm run dev
+```
+
+## Configuration
+
+Create `.env.local` file:
+```bash
+OPENAI_API_KEY=your_openai_api_key
+NEON_DATABASE_URL=your_neon_database_url
+PINECONE_API_KEY=your_pinecone_api_key
+PINECONE_ENVIRONMENT=us-east-1-aws
+PINECONE_INDEX=your_index_name
+```
 
 ## Deployment
 
-This application is automatically deployed to Hugging Face Spaces via GitHub Actions when changes are pushed to the main branch.
+### Hugging Face Spaces (Recommended)
 
-### Manual Deployment
+This app auto-deploys to Hugging Face via GitHub Actions on every push to `main`.
 
-To manually deploy to Hugging Face:
+**Setup:**
+1. Fork this repo
+2. Create a Hugging Face Space with Docker SDK
+3. Add `HF_TOKEN` secret to your GitHub repo settings
+4. Push to `main` - deployment happens automatically
 
-1. Create a new Space on Hugging Face with Docker SDK
-2. Add the following secrets to your GitHub repository:
-   - `HF_TOKEN`: Your Hugging Face access token
-3. Push to the main branch to trigger the workflow
+**Live Demo:** https://huggingface.co/spaces/ashishsankhua/product-pilot
 
 ### Local Development
 
 ```bash
-# Install dependencies
+cd frontend/next-app
 npm install
-
-# Copy environment variables
-cp .env.example .env
-
-# Run development server
 npm run dev
-
-# Build for production
-npm run build
-
-# Start production server
-npm start
 ```
 
 ## Documentation
 
-- [ARCHITECTURE.md](./ARCHITECTURE.md) - Full technical architecture
-- [WIREFRAMES.md](./WIREFRAMES.md) - UI wireframes and component specs
-- [DEPLOYMENT.md](./DEPLOYMENT.md) - Detailed deployment guide
+- [ARCHITECTURE.md](./ARCHITECTURE.md) - System architecture and design
+- [WIREFRAMES.md](./WIREFRAMES.md) - UI specifications
+- [DEPLOYMENT.md](./DEPLOYMENT.md) - Deployment guide
 
-## License
+---
 
-MIT License - see LICENSE file for details
+*Product Pilot - AI-powered product strategy for modern teams*
