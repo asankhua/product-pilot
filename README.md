@@ -14,7 +14,9 @@ license: mit
 ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
 ![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
 ![OpenAI](https://img.shields.io/badge/OpenAI-412991?style=for-the-badge&logo=openai&logoColor=white)
+![Pinecone](https://img.shields.io/badge/Pinecone-000000?style=for-the-badge&logo=pinecone&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
+![Serper](https://img.shields.io/badge/Serper-00B4D8?style=for-the-badge)
 
 **AI-powered product strategy platform** that transforms problem statements into complete product planning suites. 9-step pipeline from idea to presentation-ready PRD with user stories, roadmaps, and OKRs.
 
