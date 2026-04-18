@@ -3,14 +3,23 @@
 // Replaces Prisma for simpler operations
 // This file should only be imported in Server Components or API Routes
 
-import { config } from 'dotenv';
-
-// Load root .env file using absolute path
-config({ path: '/Users/asankhua/Cursor/Product Pilot /.env' });
-
 import { neon } from '@neondatabase/serverless';
 
-const sql = neon(process.env.DATABASE_URL!);
+// Lazy-loaded sql client to avoid build-time connection errors
+let sqlInstance: ReturnType<typeof neon> | null = null;
+const sql = new Proxy({} as ReturnType<typeof neon>, {
+  get: (_, prop: string) => {
+    if (!sqlInstance) {
+      const dbUrl = process.env.DATABASE_URL || process.env.NEON_DATABASE_URL;
+      if (!dbUrl) {
+        throw new Error('No database connection string was provided to neon(). Perhaps an environment variable has not been set?');
+      }
+      sqlInstance = neon(dbUrl);
+    }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return (sqlInstance as any)[prop];
+  }
+});
 
 export interface Project {
   id: string;
