@@ -631,6 +631,15 @@ The main project view with step-by-step pipeline progress.
 └──────────────────────────────────────────────────────────────────────┘
 ```
 
+**Step 7 Interaction Flow:**
+1. User clicks "Generate User Stories" → AI streams stories with RICE scoring
+2. User reviews generated stories in the UI
+3. User can click "Edit Results" to make changes before saving
+4. User clicks "Save Results" to persist to database (manual save required)
+5. Once saved, user can proceed to Step 8
+
+**Note:** Unlike earlier steps, Step 7 requires manual save to allow users to review and edit user stories before persisting.
+
 ---
 
 ## Screen 12: Step 8 - Backlog & Roadmap (/project/[id]/backlog)

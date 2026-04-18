@@ -498,22 +498,22 @@ The application is deployed to Hugging Face Spaces using Docker:
 Deployment Flow:
 1. Code pushed to GitHub main branch
 2. GitHub Actions workflow triggered
-3. README_HF.md copied to README.md (Hugging Face metadata)
-4. Code synced to Hugging Face Space via git
-5. Hugging Face builds Docker image
-6. Application deployed and available
+3. Code synced to Hugging Face Space via git
+4. Hugging Face builds Docker image
+5. Application deployed and available
 ```
 
 ### 5.6.2 Docker Configuration
 
 ```dockerfile
-# Base image
-FROM node:18-slim
+# Base image - Node.js 20 required for Next.js 16
+FROM node:20-slim
 
-# Build process
-- Copy package files
-- Install production dependencies
-- Copy application code
+# Build steps
+- Copy package.json from frontend/next-app/
+- Run npm install
+- Copy application code from frontend/next-app/
+- Set placeholder env vars for build time (NEON_DATABASE_URL, OPENAI_API_KEY, etc.)
 - Run npm run build
 
 # Runtime
@@ -521,6 +521,9 @@ FROM node:18-slim
 - Set NODE_ENV=production
 - Start with npm start
 ```
+
+**Build-time Environment Variables:**
+Placeholder values are set during Docker build to allow Next.js to compile API routes. Actual secrets are injected by Hugging Face at runtime.
 
 ### 5.6.3 GitHub Actions Workflow
 
@@ -530,10 +533,11 @@ Trigger: Push to main branch, manual dispatch
 
 Steps:
 1. Checkout repository
-2. Copy README_HF.md to README.md (includes Hugging Face metadata)
-3. Configure git
-4. Push to Hugging Face Space (ashishsankhua/product-pilot)
+2. Configure git
+3. Push to Hugging Face Space (ashishsankhua/product-pilot)
 ```
+
+**Note:** The workflow no longer copies README_HF.md as the main README.md now contains all necessary documentation.
 
 ### 5.6.4 Environment Variables
 
@@ -548,6 +552,25 @@ Hugging Face Space requires these environment variables:
 
 - GitHub: https://github.com/asankhua/product-pilot
 - Hugging Face Space: https://huggingface.co/spaces/ashishsankhua/product-pilot
+
+### 5.6.6 Build-Time Compatibility Fixes
+
+**Neon Database Client (Lazy Loading):**
+- Issue: Database client tried to connect during Next.js static generation
+- Solution: Implemented lazy-loaded SQL client using Proxy pattern
+- File: `lib/db/neon-client.ts`
+- Result: Connection only happens at runtime when queries execute
+
+**SSR-Safe localStorage:**
+- Issue: `localStorage` access during static generation caused build failures
+- Solution: Move all localStorage access inside `useEffect` hooks
+- File: `app/settings/page.tsx`
+- Pattern: Initialize state with defaults, load from localStorage in useEffect
+
+**Environment Variable Handling:**
+- Issue: Hardcoded `.env` paths in next.config.mjs and neon-client.ts
+- Solution: Removed dotenv imports, rely on Docker ENV vars and Hugging Face secrets
+- Files: `next.config.mjs`, `Dockerfile`
 
 ---
 
