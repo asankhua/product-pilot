@@ -53,7 +53,7 @@ User enters Problem Statement
 | Embeddings         | Pinecone Inference / text-embedding-3-small    | Text vectorization                         |
 | Relational DB      | Neon PostgreSQL (Serverless)                    | Structured data persistence                |
 | Database Client    | @neondatabase/serverless                       | Direct SQL with type-safe queries          |
-| PPT Generation     | PptxGenJS                                      | Client-side PowerPoint generation          |
+| PPT Generation     | PptxGenJS (Client) / Python Microservice       | Client-side fallback + Python service      |
 | Templates          | TypeScript Objects + JSON Schema               | 6 templates with pre-filled problem statements |
 | Template Reference | ProductPlan + Product School                   | Problem Statement & Persona templates        |
 | Chatbot            | RAG + Project Context                          | Project Q&A with full step data access     |
@@ -1889,6 +1889,96 @@ The pipeline progress system provides constant visual feedback across the entire
 | **License & Footer** | MIT License with copyright footer | All Pages |
 | **Neon Database** | Replaced Prisma with @neondatabase/serverless | Backend |
 | **Sidebar Updated** | 5 navigation items (added Presentation) | Layout |
+
+---
+
+### 🎯 PPT Generation Microservice
+
+**Location:** `ppt-service/` directory
+
+**Purpose:** Professional PowerPoint generation with python-pptx for higher quality presentations than client-side PptxGenJS.
+
+**Technology Stack:**
+- **Framework:** FastAPI + Uvicorn
+- **Core Library:** python-pptx (more mature than PptxGenJS)
+- **Charts:** Matplotlib for TAM/SAM/SOM and progress charts
+- **Container:** Docker with Python 3.11
+
+**Architecture:**
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                   Product Pilot Frontend                        │
+│              (Next.js /app/presentation/page.tsx)                │
+└──────────────────────────┬──────────────────────────────────────┘
+                           │ POST /generate
+                           │ Fallback to PptxGenJS if unavailable
+┌──────────────────────────▼──────────────────────────────────────┐
+│                    PPT Microservice (Port 8000)                     │
+│  ┌────────────────┐  ┌────────────────┐  ┌────────────────────┐   │
+│  │   FastAPI      │  │  python-pptx   │  │    matplotlib      │   │
+│  │   REST API     │  │  PPTX Gen      │  │    Charts          │   │
+│  └────────────────┘  └────────────────┘  └────────────────────┘   │
+│         │                     │                     │            │
+│         ▼                     ▼                     ▼            │
+│  ┌─────────────────────────────────────────────────────────────┐ │
+│  │         4 Templates: Professional, Minimal, Dark, Startup  │ │
+│  │         9 Step-Specific Slide Layouts                        │ │
+│  │         Visual Cards, Tables, Charts                         │ │
+│  └─────────────────────────────────────────────────────────────┘ │
+└──────────────────────────┬──────────────────────────────────────┘
+                           │
+                           ▼
+                    ┌──────────────┐
+                    │   .pptx File │
+                    │   Download   │
+                    └──────────────┘
+```
+
+**API Endpoints:**
+- `GET /health` - Health check
+- `GET /templates` - List 4 available templates
+- `POST /generate` - Generate presentation (returns download URL)
+- `GET /download/{filename}` - Download generated file
+
+**Templates:**
+| Template | Style | Primary Color |
+|----------|-------|---------------|
+| `professional` | Corporate blue | Blue |
+| `minimal` | Clean whitespace | Gray |
+| `dark` | Modern dark | Indigo |
+| `startup` | Bold pitch deck | Rose/Orange |
+
+**Running Locally:**
+```bash
+cd ppt-service
+
+# Option 1: Docker
+docker-compose up --build
+
+# Option 2: Direct Python
+pip install -r requirements.txt
+cd src && python main.py
+```
+
+Service available at `http://localhost:8000`
+
+**Integration with Frontend:**
+```typescript
+// lib/ppt-service.ts
+const response = await fetch('http://localhost:8000/generate', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    projectName: "Food Delivery App",
+    steps: formattedSteps,
+    template: "professional",
+    includeCharts: true
+  })
+});
+
+const blob = await response.blob();
+downloadPPT(blob, "Presentation.pptx");
+```
 
 ---
 

@@ -1023,29 +1023,103 @@ Each pipeline step features consistent navigation controls:
 ## Presentation Generator
 
 ### Purpose
-Generate PowerPoint presentations from project step data
+Generate professional PowerPoint presentations from project step data
 
 ### UI Layout
 - Project selector dropdown (fetches from `/api/projects/list`)
-- 9-step checkbox grid (only available steps are enabled)
-- Template selector (Minimal/Professional/Visual)
-- Preview panel showing slide count
+- Step selection checklist with progress indicators
+- **Template selector** (Professional, Minimal, Dark, Startup)
+- **Generation mode toggle:** Client-side (PptxGenJS) or Python Microservice
+- Settings panel for title customization
 - Generate button with loading state
 
 ### Features
-- Auto-detects available steps from saved sessions
-- Client-side PPT generation using `pptxgenjs`
-- Step-specific slide formatting matching UI styling
+- **Auto-detects** available steps from saved sessions
+- **Two generation modes:**
+  1. **Client-side** (PptxGenJS) - Fallback, runs in browser
+  2. **Python Microservice** - Higher quality with professional templates
+- **4 Professional Templates:**
+  | Template | Style | Best For |
+  |----------|-------|----------|
+  | Professional | Clean corporate blue | Business presentations |
+  | Minimal | Whitespace-focused | Simple, elegant decks |
+  | Dark | Modern dark theme | Tech/startup pitches |
+  | Startup | Bold rose/orange | Investor pitches |
+- **Matplotlib Charts:** TAM/SAM/SOM funnel, OKR progress bars
+- **Visual Cards:** Persona cards, feature cards, info boxes
 - Download as `.pptx` file
-- Title slide + selected step slides + thank you slide
+- Title slide + agenda + selected step slides + thank you slide
 
-### Step Formatting
+### Architecture
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    User clicks "Generate"                          │
+└──────────────────────────┬───────────────────────────────────────┘
+                           │
+         ┌─────────────────┼─────────────────┐
+         │                 │                 │
+         ▼                 ▼                 ▼
+┌────────────────┐  ┌────────────────┐  ┌────────────────────┐
+│  Check Health  │  │ Python Service │  │  PptxGenJS       │
+│  localhost:8000│  │ Available?     │  │  (Fallback)      │
+└───────┬────────┘  └───────┬────────┘  └────────────────────┘
+        │                   │ Yes
+        │ No                │
+        │                   ▼
+        │           ┌────────────────┐
+        │           │ POST /generate │
+        │           │ FastAPI        │
+        │           │ python-pptx    │
+        │           │ matplotlib     │
+        │           └───────┬────────┘
+        │                   │
+        └───────────────────┤
+                            ▼
+                    ┌──────────────┐
+                    │  .pptx File  │
+                    │  Download    │
+                    └──────────────┘
+```
+
+### Python Microservice Integration
+```typescript
+// lib/ppt-service.ts - Integration helper
+
+async function generateWithPythonService(project, steps, template) {
+  // Check if service is available
+  const isHealthy = await fetch('http://localhost:8000/health');
+  if (!isHealthy.ok) throw new Error('Service unavailable');
+  
+  // Generate via microservice
+  const response = await fetch('http://localhost:8000/generate', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      projectName: project.name,
+      projectDescription: project.description,
+      steps: steps.map(s => ({
+        stepId: s.id,
+        stepName: s.name,
+        data: s.savedData
+      })),
+      template: template, // 'professional' | 'minimal' | 'dark' | 'startup'
+      includeCharts: true,
+      includeImages: true
+    })
+  });
+  
+  const result = await response.json();
+  const fileResponse = await fetch(`http://localhost:8000${result.downloadUrl}`);
+  return await fileResponse.blob();
+}
+```
+
+### Step Formatting (Python Service)
 - **Step 1 (Reframe):** Title, reframed problem, root causes list
 - **Step 2 (Vision):** Vision statement (italic), elevator pitch
 - **Step 3 (Personas):** 2-column grid of persona cards
 - **Step 4 (Questions):** Q&A cards with answers
 - **Step 5 (Market):** Overview + competitors list
-- **Steps 6-9:** Structured data display
 
 ---
 
