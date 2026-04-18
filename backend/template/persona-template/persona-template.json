@@ -1,0 +1,166 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "User Persona Template",
+  "description": "Product School-based user persona template for Product Pilot Step 3",
+  "type": "object",
+  "required": [
+    "personaName",
+    "personaRole",
+    "name",
+    "role",
+    "age",
+    "quote"
+  ],
+  "properties": {
+    "personaName": {
+      "type": "string",
+      "description": "Descriptive name for the persona (e.g., 'Productivity Paul')"
+    },
+    "personaRole": {
+      "type": "string",
+      "description": "Role/title that describes the persona"
+    },
+    "overview": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "role": { "type": "string" },
+        "age": { "type": "integer" },
+        "generation": {
+          "type": "string",
+          "enum": ["Gen Z", "Millennial", "Gen X", "Boomer"]
+        },
+        "location": { "type": "string" },
+        "quote": { "type": "string", "description": "Representative quote capturing mindset" }
+      }
+    },
+    "demographics": {
+      "type": "object",
+      "properties": {
+        "personal": {
+          "type": "object",
+          "properties": {
+            "gender": { "type": "string" },
+            "education": { "type": "string" },
+            "occupation": { "type": "string" },
+            "incomeLevel": { "type": "string" },
+            "familyStatus": { "type": "string" },
+            "livingSituation": { "type": "string" }
+          }
+        },
+        "professional": {
+          "type": "object",
+          "properties": {
+            "industry": { "type": "string" },
+            "companySize": { "type": "string" },
+            "yearsExperience": { "type": "string" },
+            "technicalSkill": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 5
+            },
+            "toolsUsed": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "psychographics": {
+      "type": "object",
+      "properties": {
+        "personalityTraits": { "type": "string" },
+        "values": { "type": "string" },
+        "fears": { "type": "string" },
+        "motivations": { "type": "string" },
+        "hobbies": { "type": "string" },
+        "favoriteBrands": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "influencers": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "usageProfile": {
+      "type": "object",
+      "properties": {
+        "patterns": {
+          "type": "object",
+          "properties": {
+            "frequency": { "type": "string" },
+            "sessionDuration": { "type": "string" },
+            "primaryDevices": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "context": { "type": "string" },
+            "timeOfDay": { "type": "string" }
+          }
+        },
+        "goals": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1,
+          "maxItems": 5
+        },
+        "painPoints": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": { "type": "string" },
+              "description": { "type": "string" }
+            }
+          },
+          "minItems": 1,
+          "maxItems": 5
+        },
+        "needs": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "journeyContext": {
+      "type": "object",
+      "properties": {
+        "currentBehavior": { "type": "string" },
+        "dayInTheLife": { "type": "string" },
+        "triggerEvents": { "type": "string" },
+        "decisionMaking": { "type": "string" }
+      }
+    },
+    "productFit": {
+      "type": "object",
+      "properties": {
+        "whyNeedProduct": { "type": "string" },
+        "howTheyllUseIt": { "type": "string" },
+        "successMetrics": { "type": "string" },
+        "objections": { "type": "string" }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "isPrimaryPersona": { "type": "boolean" },
+        "relatedPersonas": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "personaSegment": { "type": "string" }
+      }
+    },
+    "validation": {
+      "type": "object",
+      "properties": {
+        "dataSources": { "type": "string" },
+        "validatedAssumptions": { "type": "string" },
+        "openQuestions": { "type": "string" }
+      }
+    }
+  }
+}

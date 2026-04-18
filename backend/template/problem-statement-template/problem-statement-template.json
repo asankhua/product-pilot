@@ -1,0 +1,186 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Problem Statement Template",
+  "description": "ProductPlan-based problem statement template for Product Pilot Step 1",
+  "type": "object",
+  "required": [
+    "problemTitle",
+    "oneLineSummary",
+    "problemDescription",
+    "affectedUsers"
+  ],
+  "properties": {
+    "problemTitle": {
+      "type": "string",
+      "description": "Title of the problem statement"
+    },
+    "oneLineSummary": {
+      "type": "string",
+      "description": "Concise one-line summary of the problem"
+    },
+    "problem": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string",
+          "description": "Detailed problem description without solution assumptions"
+        },
+        "affectedUsers": {
+          "type": "string",
+          "description": "Who is affected by this problem"
+        },
+        "painPoints": {
+          "type": "string",
+          "description": "Specific pain points experienced"
+        }
+      },
+      "required": ["description", "affectedUsers"]
+    },
+    "context": {
+      "type": "object",
+      "properties": {
+        "rootCauses": {
+          "type": "string",
+          "description": "Underlying causes of the problem"
+        },
+        "whenItOccurs": {
+          "type": "string",
+          "description": "When the problem occurs"
+        },
+        "howItManifests": {
+          "type": "string",
+          "description": "How the problem manifests"
+        },
+        "currentWorkarounds": {
+          "type": "string",
+          "description": "Existing workarounds users employ"
+        },
+        "existingSolutionFailures": {
+          "type": "string",
+          "description": "Why current solutions fail"
+        }
+      }
+    },
+    "scope": {
+      "type": "object",
+      "properties": {
+        "inScope": {
+          "type": "string",
+          "description": "What the solution will address"
+        },
+        "outOfScope": {
+          "type": "string",
+          "description": "What the solution will NOT address"
+        },
+        "boundaries": {
+          "type": "string",
+          "description": "Constraints and boundaries"
+        }
+      }
+    },
+    "measurability": {
+      "type": "object",
+      "properties": {
+        "currentMetric": {
+          "type": "string",
+          "description": "Current state quantifiable metric"
+        },
+        "targetMetric": {
+          "type": "string",
+          "description": "Target state metric"
+        },
+        "timeframe": {
+          "type": "string",
+          "description": "Timeline for achieving target"
+        },
+        "successCriteria": {
+          "type": "string",
+          "description": "How to measure success"
+        }
+      }
+    },
+    "impact": {
+      "type": "object",
+      "properties": {
+        "businessImpact": {
+          "type": "string",
+          "description": "Impact on business metrics"
+        },
+        "userImpact": {
+          "type": "string",
+          "description": "Impact on users' lives/work"
+        },
+        "consequences": {
+          "type": "string",
+          "description": "Consequences of not solving"
+        },
+        "benefits": {
+          "type": "string",
+          "description": "Benefits of solving the problem"
+        }
+      }
+    },
+    "validation": {
+      "type": "object",
+      "properties": {
+        "supportingData": {
+          "type": "string",
+          "description": "Data supporting the problem"
+        },
+        "userResearch": {
+          "type": "string",
+          "description": "User research insights"
+        },
+        "marketEvidence": {
+          "type": "string",
+          "description": "Market evidence of the problem"
+        },
+        "stakeholderInput": {
+          "type": "string",
+          "description": "Stakeholder perspectives"
+        }
+      }
+    },
+    "conciseFormat": {
+      "type": "object",
+      "description": "Mad Libs style concise problem statement",
+      "properties": {
+        "targetUser": {
+          "type": "string",
+          "description": "For [target user]"
+        },
+        "whoStatement": {
+          "type": "string",
+          "description": "Who [statement of need or opportunity]"
+        },
+        "theProblem": {
+          "type": "string",
+          "description": "The [problem]"
+        },
+        "isAProblem": {
+          "type": "string",
+          "description": "Is a [describe the problem's impact]"
+        },
+        "thatCauses": {
+          "type": "string",
+          "description": "That [describe the consequences]"
+        },
+        "unlikeCurrent": {
+          "type": "string",
+          "description": "Unlike [current solutions]"
+        },
+        "ourSolution": {
+          "type": "string",
+          "description": "Our solution [describe the approach]"
+        }
+      }
+    },
+    "nextSteps": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1,
+      "maxItems": 5,
+      "description": "Next steps to take"
+    }
+  }
+}

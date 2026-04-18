@@ -1,0 +1,314 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ChatPRD Template",
+  "description": "Comprehensive 6-section PRD template from ChatPRD for Product Pilot Step 6",
+  "type": "object",
+  "required": [
+    "metadata",
+    "background",
+    "objectives",
+    "features",
+    "userExperience",
+    "milestones",
+    "technicalRequirements"
+  ],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "productName": { "type": "string" },
+        "authorName": { "type": "string" },
+        "date": { "type": "string" },
+        "status": { "type": "string" },
+        "version": { "type": "string" }
+      },
+      "required": ["productName"]
+    },
+    "background": {
+      "type": "object",
+      "properties": {
+        "problemStatement": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "marketOpportunity": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "userPersonas": {
+          "type": "object",
+          "properties": {
+            "persona1": {
+              "type": "object",
+              "properties": {
+                "name": { "type": "string" },
+                "characteristics": { "type": "string" },
+                "needs": { "type": "string" },
+                "challenges": { "type": "string" }
+              }
+            },
+            "persona2": {
+              "type": "object",
+              "properties": {
+                "name": { "type": "string" },
+                "characteristics": { "type": "string" },
+                "needs": { "type": "string" },
+                "challenges": { "type": "string" }
+              }
+            }
+          }
+        },
+        "visionStatement": { "type": "string" },
+        "productOrigin": { "type": "string" }
+      }
+    },
+    "objectives": {
+      "type": "object",
+      "properties": {
+        "smartGoals": {
+          "type": "object",
+          "properties": {
+            "specific": { "type": "string" },
+            "measurable": { "type": "string" },
+            "achievable": { "type": "string" },
+            "relevant": { "type": "string" },
+            "timebound": { "type": "string" }
+          }
+        },
+        "kpis": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "qualitativeObjectives": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "strategicAlignment": { "type": "string" },
+        "riskMitigation": {
+          "type": "object",
+          "properties": {
+            "risks": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "strategies": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "contingencies": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "features": {
+      "type": "object",
+      "properties": {
+        "coreFeatures": {
+          "type": "object",
+          "properties": {
+            "feature1": {
+              "type": "object",
+              "properties": {
+                "name": { "type": "string" },
+                "description": { "type": "string" },
+                "benefit": { "type": "string" },
+                "specs": { "type": "string" }
+              }
+            },
+            "feature2": {
+              "type": "object",
+              "properties": {
+                "name": { "type": "string" },
+                "description": { "type": "string" },
+                "benefit": { "type": "string" },
+                "specs": { "type": "string" }
+              }
+            },
+            "feature3": {
+              "type": "object",
+              "properties": {
+                "name": { "type": "string" },
+                "description": { "type": "string" },
+                "benefit": { "type": "string" },
+                "specs": { "type": "string" }
+              }
+            }
+          }
+        },
+        "userBenefits": {
+          "type": "object",
+          "properties": {
+            "user1": {
+              "type": "object",
+              "properties": {
+                "target": { "type": "string" },
+                "benefit": { "type": "string" }
+              }
+            },
+            "user2": {
+              "type": "object",
+              "properties": {
+                "target": { "type": "string" },
+                "benefit": { "type": "string" }
+              }
+            }
+          }
+        },
+        "technicalSpecifications": { "type": "string" },
+        "prioritization": {
+          "type": "object",
+          "properties": {
+            "p0": {
+              "type": "object",
+              "properties": {
+                "feature": { "type": "string" },
+                "rationale": { "type": "string" }
+              }
+            },
+            "p1": {
+              "type": "object",
+              "properties": {
+                "feature": { "type": "string" },
+                "rationale": { "type": "string" }
+              }
+            },
+            "p2": {
+              "type": "object",
+              "properties": {
+                "feature": { "type": "string" },
+                "rationale": { "type": "string" }
+              }
+            },
+            "p3": {
+              "type": "object",
+              "properties": {
+                "feature": { "type": "string" },
+                "rationale": { "type": "string" }
+              }
+            }
+          }
+        },
+        "futureEnhancements": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "userExperience": {
+      "type": "object",
+      "properties": {
+        "uiDesign": {
+          "type": "object",
+          "properties": {
+            "principles": { "type": "string" },
+            "visualStyle": { "type": "string" },
+            "wireframes": { "type": "string" }
+          }
+        },
+        "userJourney": {
+          "type": "object",
+          "properties": {
+            "onboarding": { "type": "string" },
+            "coreFlow": { "type": "string" },
+            "engagement": { "type": "string" }
+          }
+        },
+        "usabilityTesting": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "accessibility": { "type": "string" },
+        "feedbackLoops": { "type": "string" }
+      }
+    },
+    "milestones": {
+      "type": "object",
+      "properties": {
+        "phases": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "activity": { "type": "string" },
+              "duration": { "type": "string" },
+              "status": { "type": "string" }
+            }
+          }
+        },
+        "criticalPath": { "type": "string" },
+        "reviewPoints": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "launchPlan": {
+          "type": "object",
+          "properties": {
+            "marketing": { "type": "string" },
+            "training": { "type": "string" },
+            "support": { "type": "string" }
+          }
+        },
+        "postLaunchEvaluation": { "type": "string" }
+      }
+    },
+    "technicalRequirements": {
+      "type": "object",
+      "properties": {
+        "techStack": {
+          "type": "object",
+          "properties": {
+            "frontend": { "type": "string" },
+            "backend": { "type": "string" },
+            "database": { "type": "string" },
+            "cloud": { "type": "string" },
+            "cicd": { "type": "string" }
+          }
+        },
+        "systemArchitecture": { "type": "string" },
+        "security": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "performance": {
+          "type": "object",
+          "properties": {
+            "responseTime": { "type": "string" },
+            "uptime": { "type": "string" },
+            "scalability": { "type": "string" }
+          }
+        },
+        "integrations": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "successMetrics": {
+      "type": "object",
+      "properties": {
+        "primary": { "type": "string" },
+        "secondary": { "type": "string" },
+        "reportingCadence": { "type": "string" }
+      }
+    },
+    "appendix": {
+      "type": "object",
+      "properties": {
+        "glossary": { "type": "string" },
+        "references": { "type": "string" },
+        "changeLog": {
+          "type": "object",
+          "properties": {
+            "date": { "type": "string" },
+            "version": { "type": "string" },
+            "description": { "type": "string" },
+            "author": { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+}

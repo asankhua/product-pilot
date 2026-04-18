@@ -1,0 +1,67 @@
+# Dependencies
+node_modules/
+frontend/next-app/node_modules/
+package-lock.json
+frontend/next-app/package-lock.json
+
+# Build outputs
+.next/
+frontend/next-app/.next/
+out/
+frontend/next-app/out/
+dist/
+frontend/next-app/dist/
+build/
+
+# Next.js specific
+*.sst
+frontend/next-app/.next/cache/
+frontend/next-app/.next/dev/
+frontend/next-app/.next/standalone/
+frontend/next-app/.next/static/
+
+# SWC binaries (large files that caused GitHub push failure)
+*.darwin-arm64.node
+*.darwin-x64.node
+*.linux-x64-gnu.node
+*.win32-x64-msvc.node
+frontend/next-app/node_modules/**/next-swc.*.node
+frontend/next-app/node_modules/**/@next/swc-*/
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+frontend/next-app/.env
+frontend/next-app/.env.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Cache
+.cache/
+.turbo/
+frontend/next-app/.turbo/
+
+# TypeScript
+*.tsbuildinfo
+frontend/next-app/tsconfig.tsbuildinfo
+
+# Misc
+*.pem

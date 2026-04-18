@@ -1,0 +1,187 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OKRs + Success Metrics Template",
+  "description": "Comprehensive OKR and product metrics template for Product Pilot Step 9",
+  "type": "object",
+  "required": [
+    "metadata",
+    "northStar",
+    "okrs"
+  ],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "productName": { "type": "string" },
+        "quarter": { "type": "string" },
+        "teamName": { "type": "string" },
+        "productLead": { "type": "string" },
+        "lastUpdated": { "type": "string" }
+      },
+      "required": ["productName", "quarter"]
+    },
+    "northStar": {
+      "type": "object",
+      "properties": {
+        "definition": { "type": "string" },
+        "current": { "type": "string" },
+        "target": { "type": "string" },
+        "rationale": { "type": "string" }
+      }
+    },
+    "okrs": {
+      "type": "object",
+      "properties": {
+        "okr1": { "$ref": "#/definitions/okrSet" },
+        "okr2": { "$ref": "#/definitions/okrSet" },
+        "okr3": { "$ref": "#/definitions/okrSet" }
+      }
+    },
+    "metrics": {
+      "type": "object",
+      "properties": {
+        "acquisition": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/metric" }
+        },
+        "engagement": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/metric" }
+        },
+        "retention": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/metric" }
+        },
+        "revenue": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/metric" }
+        },
+        "quality": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/metric" }
+        }
+      }
+    },
+    "aarrr": {
+      "type": "object",
+      "properties": {
+        "acquisition": {
+          "type": "object",
+          "properties": {
+            "channel": { "type": "string" },
+            "volume": { "type": "string" },
+            "cost": { "type": "string" }
+          }
+        },
+        "activation": {
+          "type": "object",
+          "properties": {
+            "event": { "type": "string" },
+            "rate": { "type": "string" },
+            "timeToFirstValue": { "type": "string" }
+          }
+        },
+        "retention": {
+          "type": "object",
+          "properties": {
+            "cohort": { "type": "string" },
+            "day7": { "type": "string" },
+            "day30": { "type": "string" }
+          }
+        },
+        "revenue": {
+          "type": "object",
+          "properties": {
+            "arpu": { "type": "string" },
+            "ltv": { "type": "string" },
+            "mrrArr": { "type": "string" }
+          }
+        },
+        "referral": {
+          "type": "object",
+          "properties": {
+            "nps": { "type": "string" },
+            "rate": { "type": "string" },
+            "viralCoefficient": { "type": "string" }
+          }
+        }
+      }
+    },
+    "leadingLagging": {
+      "type": "object",
+      "properties": {
+        "leading": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "indicator": { "type": "string" },
+              "why": { "type": "string" }
+            }
+          }
+        },
+        "lagging": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "indicator": { "type": "string" },
+              "what": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "reviewSchedule": {
+      "type": "object",
+      "properties": {
+        "weekly": { "type": "string" },
+        "monthly": { "type": "string" },
+        "quarterly": { "type": "string" }
+      }
+    }
+  },
+  "definitions": {
+    "okrSet": {
+      "type": "object",
+      "properties": {
+        "objective": { "type": "string" },
+        "keyResults": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "description": { "type": "string" },
+              "current": { "type": "string" },
+              "target": { "type": "string" },
+              "status": {
+                "type": "string",
+                "enum": ["on-track", "at-risk", "behind"]
+              }
+            }
+          },
+          "minItems": 1,
+          "maxItems": 5
+        },
+        "alignment": { "type": "string" },
+        "initiatives": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "metric": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "definition": { "type": "string" },
+        "current": { "type": "string" },
+        "target": { "type": "string" },
+        "frequency": {
+          "type": "string",
+          "enum": ["daily", "weekly", "monthly", "quarterly"]
+        }
+      }
+    }
+  }
+}
