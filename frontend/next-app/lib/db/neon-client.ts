@@ -3,23 +3,31 @@
 // Replaces Prisma for simpler operations
 // This file should only be imported in Server Components or API Routes
 
-import { neon } from '@neondatabase/serverless';
+import { neon, NeonQueryFunction } from '@neondatabase/serverless';
+
+// Type for SQL query results
+type SqlResult = Record<string, unknown>[];
 
 // Lazy-loaded sql client to avoid build-time connection errors
-let sqlInstance: ReturnType<typeof neon> | null = null;
-const sql = new Proxy({} as ReturnType<typeof neon>, {
-  get: (_, prop: string) => {
-    if (!sqlInstance) {
-      const dbUrl = process.env.DATABASE_URL || process.env.NEON_DATABASE_URL;
-      if (!dbUrl) {
-        throw new Error('No database connection string was provided to neon(). Perhaps an environment variable has not been set?');
-      }
-      sqlInstance = neon(dbUrl);
+let sqlInstance: NeonQueryFunction<boolean, boolean> | null = null;
+
+function getSql(): NeonQueryFunction<boolean, boolean> {
+  if (!sqlInstance) {
+    const dbUrl = process.env.DATABASE_URL || process.env.NEON_DATABASE_URL;
+    if (!dbUrl) {
+      throw new Error('No database connection string was provided to neon(). Perhaps an environment variable has not been set?');
     }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return (sqlInstance as any)[prop];
+    sqlInstance = neon(dbUrl);
   }
-});
+  return sqlInstance;
+}
+
+// Wrapper function for SQL queries with proper typing
+async function sql(strings: TemplateStringsArray, ...values: unknown[]): Promise<SqlResult> {
+  const sqlFn = getSql();
+  const result = await sqlFn(strings, ...values);
+  return result as SqlResult;
+}
 
 export interface Project {
   id: string;
@@ -113,7 +121,7 @@ export async function createProject(project: Omit<Project, 'createdAt' | 'update
     )
     RETURNING *;
   `;
-  return result[0] as Project;
+  return result[0] as unknown as Project;
 }
 
 export async function getProject(id: string): Promise<Project | null> {
@@ -123,7 +131,7 @@ export async function getProject(id: string): Promise<Project | null> {
   if (!result[0]) return null;
   
   // Map snake_case DB columns to camelCase interface
-  const row = result[0] as any;
+  const row = result[0] as Record<string, unknown>;
   return {
     id: row.id,
     name: row.name,
@@ -162,7 +170,7 @@ export async function updateProject(id: string, updates: Partial<Project>) {
     WHERE id = ${id}
     RETURNING *;
   `;
-  return result[0] as Project;
+  return result[0] as unknown as Project;
 }
 
 export async function listProjects(): Promise<Project[]> {
@@ -186,7 +194,7 @@ export async function listProjects(): Promise<Project[]> {
     projectContext: row.project_context,
     completedSteps: row.completed_steps,
     lastUpdated: row.last_updated
-  })) as Project[];
+  })) as unknown as Project[];
 }
 
 export async function deleteProject(id: string) {
