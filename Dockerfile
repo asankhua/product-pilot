@@ -37,7 +37,7 @@ RUN npm run build
 
 # Install Python PPT service dependencies
 COPY ppt-service/requirements.txt /tmp/requirements.txt
-RUN pip3 install --no-cache-dir -r /tmp/requirements.txt
+RUN pip3 install --break-system-packages --no-cache-dir -r /tmp/requirements.txt
 
 # Copy Python PPT service code
 COPY ppt-service/src/ /app/ppt-service/src/
