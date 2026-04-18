@@ -2286,29 +2286,8 @@ ${contentSections}
                   setIsUserStoriesComplete(true);
                   setCurrentStep(7);
                   setIsStreaming(false);
-                  // Save progress to savedSessions
-                  const currentStepInfo = pipelineSteps.find(s => s.id === 7);
-                  const newSession: SavedSession = {
-                    id: Date.now().toString(),
-                    stepNumber: 7,
-                    stepName: currentStepInfo?.name || "Step 7",
-                    data: JSON.parse(JSON.stringify(userStoriesOutput)),
-                    savedAt: new Date().toISOString(),
-                    name: `${currentStepInfo?.description || "Step 7"} - ${new Date().toLocaleString()}`,
-                  };
-                  const updatedSessions = [...savedSessions, newSession];
-                  setSavedSessions(updatedSessions);
-                  // Save to database
-                  try {
-                    await fetch(`/api/projects/${projectId}`, {
-                      method: "PATCH",
-                      headers: { "Content-Type": "application/json" },
-                      body: JSON.stringify({ savedSessions: updatedSessions }),
-                    });
-                  } catch (error) {
-                    console.error("Failed to save user stories:", error);
-                  }
-                  await saveProjectProgress({ currentStep: 7, isUserStoriesComplete: true });
+                  // Note: User must click "Save Results" button to save to database
+                  // This allows reviewing and editing before saving
                   break;
 
                 case "error":
