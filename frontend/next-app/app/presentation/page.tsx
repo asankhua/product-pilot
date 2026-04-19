@@ -250,8 +250,18 @@ export default function PresentationPage() {
       });
 
       if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.detail || 'Failed to generate presentation');
+        const errorData = await response.json();
+        console.error('PPT Service Error:', errorData);
+        
+        // Handle FastAPI validation errors
+        if (errorData.detail && Array.isArray(errorData.detail)) {
+          const validationErrors = errorData.detail.map((err: any) => 
+            `${err.loc?.join('.')}: ${err.msg}`
+          ).join(', ');
+          throw new Error(`Validation error: ${validationErrors}`);
+        }
+        
+        throw new Error(errorData.detail || errorData.message || `Failed to generate presentation (${response.status})`);
       }
 
       const result = await response.json();
