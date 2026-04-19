@@ -181,7 +181,22 @@ export default function PresentationPage() {
   const getStepData = (stepId: number): any => {
     if (!selectedProject) return null;
     switch (stepId) {
-      case 1: return selectedProject.phase1Data?.reframe || null;
+      case 1: {
+        const reframe = selectedProject.phase1Data?.reframe;
+        if (!reframe) return null;
+        // Flatten nested structure for PPT microservice
+        const framework = reframe.problemStatementFramework || {};
+        const impact = framework["5. Impact"] || {};
+        const context = framework["2. Context"] || {};
+        const theProblem = framework["1. The Problem"] || {};
+        return {
+          problemTitle: reframe.problemTitle || theProblem.problemDescription?.substring(0, 50),
+          reframedProblem: reframe.oneLineSummary || theProblem.problemDescription,
+          rootCauses: context.rootCauses || [],
+          userImpact: impact.userImpact || "",
+          opportunitySize: impact.businessImpact || ""
+        };
+      }
       case 2: return selectedProject.phase1Data?.vision || null;
       case 3: {
         const personas = selectedProject.phase2Data?.personas?.personas || selectedProject.phase2Data?.personas;
