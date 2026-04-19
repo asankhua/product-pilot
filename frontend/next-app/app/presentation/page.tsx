@@ -24,8 +24,8 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 
-// PPT Service API Configuration
-const PPT_SERVICE_URL = process.env.NEXT_PUBLIC_PPT_SERVICE_URL || 'http://localhost:8000';
+// PPT Service API Configuration - Using external Hugging Face microservice
+const PPT_SERVICE_URL = process.env.NEXT_PUBLIC_PPT_SERVICE_URL || 'https://ashishsankhua-ppt-microservice.hf.space';
 
 interface PPTTemplate {
   id: string;
