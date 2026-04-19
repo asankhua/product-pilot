@@ -259,8 +259,15 @@ export default function PresentationPage() {
         return;
       }
 
+      // Format content as array per API_INPUT_FORMATS.md
+      const content = formattedSteps.map(step => ({
+        stepId: step.stepId,
+        stepName: step.stepName,
+        data: step.data
+      }));
+
       // Debug: Log what we're sending
-      console.log('Sending to PPT service:', JSON.stringify(formattedSteps, null, 2));
+      console.log('Sending to PPT service:', JSON.stringify({ projectName: selectedProject?.name, content }, null, 2));
 
       // Call Python microservice
       const response = await fetch(`${PPT_SERVICE_URL}/generate`, {
@@ -271,10 +278,8 @@ export default function PresentationPage() {
         body: JSON.stringify({
           projectName: selectedProject.name,
           projectDescription: selectedProject.description,
-          steps: formattedSteps,
           template: selectedTemplate,
-          includeCharts: true,
-          includeImages: false
+          content: content
         }),
       });
 
