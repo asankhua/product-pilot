@@ -181,26 +181,37 @@ export default function PresentationPage() {
   const getStepData = (stepId: number): any => {
     if (!selectedProject) return null;
     switch (stepId) {
-      case 1: return selectedProject.phase1Data?.reframe;
-      case 2: return selectedProject.phase1Data?.vision;
-      case 3: return selectedProject.phase2Data?.personas?.personas || selectedProject.phase2Data?.personas;
-      case 4: return selectedProject.phase2Data?.questions?.questions || selectedProject.phase2Data?.questions;
-      case 5: return selectedProject.phase3Data?.marketAnalysis;
+      case 1: return selectedProject.phase1Data?.reframe || null;
+      case 2: return selectedProject.phase1Data?.vision || null;
+      case 3: {
+        const personas = selectedProject.phase2Data?.personas?.personas || selectedProject.phase2Data?.personas;
+        return personas ? { personas: Array.isArray(personas) ? personas : [personas] } : null;
+      }
+      case 4: {
+        const questions = selectedProject.phase2Data?.questions?.questions || selectedProject.phase2Data?.questions;
+        return questions ? { questions: Array.isArray(questions) ? questions : [questions] } : null;
+      }
+      case 5: return selectedProject.phase3Data?.marketAnalysis || null;
       case 6: {
         const session = selectedProject.savedSessions?.find(s => s.stepNumber === 6);
-        return session?.data?.metadata ? session.data : session;
+        const data = session?.data?.metadata ? session.data : session;
+        return data && typeof data === 'object' && !Array.isArray(data) ? data : { prd: data };
       }
       case 7: {
         const session = selectedProject.savedSessions?.find(s => s.stepNumber === 7);
-        return session?.data?.stories || (Array.isArray(session?.data) ? session.data : session);
+        const stories = session?.data?.stories || (Array.isArray(session?.data) ? session.data : null);
+        return stories ? { stories: Array.isArray(stories) ? stories : [stories] } : null;
       }
       case 8: {
         const session = selectedProject.savedSessions?.find(s => s.stepNumber === 8);
-        return session?.data?.phases || (Array.isArray(session?.data) ? session.data : session);
+        const phases = session?.data?.phases || (Array.isArray(session?.data) ? session.data : null);
+        return phases ? { phases: Array.isArray(phases) ? phases : [phases] } : null;
       }
       case 9: {
         const session = selectedProject.savedSessions?.find(s => s.stepNumber === 9);
-        return session?.data;
+        return session?.data && typeof session.data === 'object' && !Array.isArray(session.data) 
+          ? session.data 
+          : { okrs: session?.data };
       }
       default: return null;
     }
