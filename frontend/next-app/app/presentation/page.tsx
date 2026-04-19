@@ -244,6 +244,9 @@ export default function PresentationPage() {
         return;
       }
 
+      // Debug: Log what we're sending
+      console.log('Sending to PPT service:', JSON.stringify(formattedSteps, null, 2));
+
       // Call Python microservice
       const response = await fetch(`${PPT_SERVICE_URL}/generate`, {
         method: 'POST',
